@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
 import { useServices, usePackages } from '../hooks/useStore'
-import { servicesApi, packagesApi, bookingsApi, inquiriesApi } from '../api'
+import { servicesApi, packagesApi, bookingsApi } from '../api'
 
 const CATEGORIES = ['Hair', 'Skin', 'Nails', 'Wellness']
 const TABS = ['Dashboard', 'Services', 'Packages', 'Bookings', 'Inquiries', 'Users']
@@ -85,7 +85,7 @@ export default function AdminPanel() {
 
   const openAddService = () => { setEditingService(null); setServiceForm({ title: '', category: 'Hair', price: '', duration: '', description: '', popular: false }); setShowServiceModal(true) }
   const openEditService = (s) => { setEditingService(s); setServiceForm({ title: s.title, category: s.category, price: s.price, duration: s.duration, description: s.description || '', popular: s.popular }); setShowServiceModal(true) }
-  
+
   const saveService = async () => {
     try {
       if (editingService) {
@@ -99,7 +99,7 @@ export default function AdminPanel() {
       alert('Error saving service: ' + err.message)
     }
   }
-  
+
   const deleteService = async (id) => {
     try {
       await servicesApi.delete(id)
@@ -112,7 +112,7 @@ export default function AdminPanel() {
 
   const openAddPackage = () => { setEditingPackage(null); setPkgForm({ name: '', tag: '', price: '', originalPrice: '', features: '', popular: false }); setShowPackageModal(true) }
   const openEditPackage = (p) => { setEditingPackage(p); setPkgForm({ name: p.name, tag: p.tag, price: p.price, originalPrice: p.originalPrice, features: p.features.join(', '), popular: p.popular }); setShowPackageModal(true) }
-  
+
   const savePackage = async () => {
     try {
       const pkg = { ...pkgForm, features: pkgForm.features.split(',').map(f => f.trim()).filter(Boolean) }
@@ -186,7 +186,7 @@ export default function AdminPanel() {
             <div className='bg-white rounded-2xl p-8 shadow-sm border border-gray-100'>
               <h3 className='font-serif text-xl font-semibold text-gray-900 mb-6'>Revenue Overview</h3>
               <div className='flex items-end gap-3 h-40 px-2'>
-                {[['Jan','40'],['Feb','65'],['Mar','55'],['Apr','80'],['May','70'],['Jun','90']].map(([m,h]) => (
+                {[['Jan', '40'], ['Feb', '65'], ['Mar', '55'], ['Apr', '80'], ['May', '70'], ['Jun', '90']].map(([m, h]) => (
                   <div key={m} className='flex-1 flex flex-col items-center gap-2'>
                     <div className='w-full rounded-t-lg' style={{ height: h + '%', background: 'linear-gradient(to top, #C9A96E, #E8D5B0)' }} />
                     <span className='text-xs text-gray-400 font-medium'>{m}</span>
@@ -200,7 +200,7 @@ export default function AdminPanel() {
                 <p className='text-gray-400 text-sm font-light text-center py-8'>No inquiries yet. They will appear here when users submit the contact form.</p>
               ) : (
                 <div className='space-y-3'>
-                  {inquiries.slice(0,5).map(inq => (
+                  {inquiries.slice(0, 5).map(inq => (
                     <div key={inq._id} className='flex items-center justify-between py-3 border-b border-gray-50'>
                       <div>
                         <p className='text-sm font-semibold text-gray-800'>{inq.name}</p>
@@ -232,7 +232,7 @@ export default function AdminPanel() {
                 <table className='w-full min-w-[600px]'>
                   <thead style={{ background: '#FAFAFA' }}>
                     <tr>
-                      {['Service','Category','Price','Duration','Popular','Actions'].map(h => (
+                      {['Service', 'Category', 'Price', 'Duration', 'Popular', 'Actions'].map(h => (
                         <th key={h} className='text-left px-6 py-4 text-xs font-semibold tracking-widest uppercase text-gray-400'>{h}</th>
                       ))}
                     </tr>
@@ -301,7 +301,7 @@ export default function AdminPanel() {
                 <table className='w-full min-w-[800px]'>
                   <thead style={{ background: '#FAFAFA' }}>
                     <tr>
-                      {['Customer','Service','Date','Amount','Status','Action'].map(h => (
+                      {['Customer', 'Service', 'Date', 'Amount', 'Status', 'Action'].map(h => (
                         <th key={h} className='text-left px-5 py-4 text-xs font-semibold tracking-widest uppercase text-gray-400'>{h}</th>
                       ))}
                     </tr>
@@ -330,7 +330,7 @@ export default function AdminPanel() {
                           </span>
                         </td>
                         <td className='px-5 py-4'>
-                          <select 
+                          <select
                             className='text-xs bg-gray-50 border-none outline-none rounded-lg px-2 py-1'
                             value={book.status}
                             onChange={(e) => updateBookingStatus(book._id, e.target.value)}
@@ -370,7 +370,7 @@ export default function AdminPanel() {
                   <table className='w-full min-w-[700px]'>
                     <thead style={{ background: '#FAFAFA' }}>
                       <tr>
-                        {['Name','Email','Phone','Service','Message','Date','Status','Action'].map(h => (
+                        {['Name', 'Email', 'Phone', 'Service', 'Message', 'Date', 'Status', 'Action'].map(h => (
                           <th key={h} className='text-left px-5 py-4 text-xs font-semibold tracking-widest uppercase text-gray-400'>{h}</th>
                         ))}
                       </tr>
@@ -396,7 +396,7 @@ export default function AdminPanel() {
                             </span>
                           </td>
                           <td className='px-5 py-4'>
-                            <select 
+                            <select
                               className='text-xs bg-gray-50 border-none outline-none rounded-lg px-2 py-1'
                               value={inq.status}
                               onChange={(e) => changeInquiryStatus(inq._id, e.target.value)}
@@ -434,30 +434,30 @@ export default function AdminPanel() {
             <div className='space-y-4'>
               <div>
                 <label className='block text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2'>Service Title *</label>
-                <input className={inputCls} value={serviceForm.title} onChange={e => setServiceForm({...serviceForm, title: e.target.value})} placeholder='e.g. Hair Cut and Styling' />
+                <input className={inputCls} value={serviceForm.title} onChange={e => setServiceForm({ ...serviceForm, title: e.target.value })} placeholder='e.g. Hair Cut and Styling' />
               </div>
               <div className='grid grid-cols-2 gap-4'>
                 <div>
                   <label className='block text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2'>Category *</label>
-                  <select className={inputCls} value={serviceForm.category} onChange={e => setServiceForm({...serviceForm, category: e.target.value})}>
+                  <select className={inputCls} value={serviceForm.category} onChange={e => setServiceForm({ ...serviceForm, category: e.target.value })}>
                     {CATEGORIES.map(c => <option key={c}>{c}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className='block text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2'>Price (Rs.) *</label>
-                  <input className={inputCls} value={serviceForm.price} onChange={e => setServiceForm({...serviceForm, price: e.target.value})} placeholder='e.g. 499' />
+                  <input className={inputCls} value={serviceForm.price} onChange={e => setServiceForm({ ...serviceForm, price: e.target.value })} placeholder='e.g. 499' />
                 </div>
               </div>
               <div>
                 <label className='block text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2'>Duration</label>
-                <input className={inputCls} value={serviceForm.duration} onChange={e => setServiceForm({...serviceForm, duration: e.target.value})} placeholder='e.g. 45 min' />
+                <input className={inputCls} value={serviceForm.duration} onChange={e => setServiceForm({ ...serviceForm, duration: e.target.value })} placeholder='e.g. 45 min' />
               </div>
               <div>
                 <label className='block text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2'>Description *</label>
-                <textarea className={inputCls} rows={3} value={serviceForm.description} onChange={e => setServiceForm({...serviceForm, description: e.target.value})} placeholder='Brief description of the service' />
+                <textarea className={inputCls} rows={3} value={serviceForm.description} onChange={e => setServiceForm({ ...serviceForm, description: e.target.value })} placeholder='Brief description of the service' />
               </div>
               <label className='flex items-center gap-3 cursor-pointer'>
-                <input type='checkbox' checked={serviceForm.popular} onChange={e => setServiceForm({...serviceForm, popular: e.target.checked})} className='w-4 h-4 accent-yellow-500' />
+                <input type='checkbox' checked={serviceForm.popular} onChange={e => setServiceForm({ ...serviceForm, popular: e.target.checked })} className='w-4 h-4 accent-yellow-500' />
                 <span className='text-sm font-medium text-gray-700'>Mark as Popular</span>
               </label>
               <div className='flex gap-3 pt-2'>
@@ -478,29 +478,29 @@ export default function AdminPanel() {
               <div className='grid grid-cols-2 gap-4'>
                 <div>
                   <label className='block text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2'>Package Name *</label>
-                  <input className={inputCls} value={pkgForm.name} onChange={e => setPkgForm({...pkgForm, name: e.target.value})} placeholder='e.g. Glow Starter' />
+                  <input className={inputCls} value={pkgForm.name} onChange={e => setPkgForm({ ...pkgForm, name: e.target.value })} placeholder='e.g. Glow Starter' />
                 </div>
                 <div>
                   <label className='block text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2'>Tag</label>
-                  <input className={inputCls} value={pkgForm.tag} onChange={e => setPkgForm({...pkgForm, tag: e.target.value})} placeholder='e.g. Basic' />
+                  <input className={inputCls} value={pkgForm.tag} onChange={e => setPkgForm({ ...pkgForm, tag: e.target.value })} placeholder='e.g. Basic' />
                 </div>
               </div>
               <div className='grid grid-cols-2 gap-4'>
                 <div>
                   <label className='block text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2'>Price (Rs.) *</label>
-                  <input className={inputCls} value={pkgForm.price} onChange={e => setPkgForm({...pkgForm, price: e.target.value})} placeholder='e.g. 1999' />
+                  <input className={inputCls} value={pkgForm.price} onChange={e => setPkgForm({ ...pkgForm, price: e.target.value })} placeholder='e.g. 1999' />
                 </div>
                 <div>
                   <label className='block text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2'>Original Price</label>
-                  <input className={inputCls} value={pkgForm.originalPrice} onChange={e => setPkgForm({...pkgForm, originalPrice: e.target.value})} placeholder='e.g. 2800' />
+                  <input className={inputCls} value={pkgForm.originalPrice} onChange={e => setPkgForm({ ...pkgForm, originalPrice: e.target.value })} placeholder='e.g. 2800' />
                 </div>
               </div>
               <div>
                 <label className='block text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2'>Features (comma separated)</label>
-                <textarea className={inputCls} rows={3} value={pkgForm.features} onChange={e => setPkgForm({...pkgForm, features: e.target.value})} placeholder='Hair Cut, Facial, Manicure' />
+                <textarea className={inputCls} rows={3} value={pkgForm.features} onChange={e => setPkgForm({ ...pkgForm, features: e.target.value })} placeholder='Hair Cut, Facial, Manicure' />
               </div>
               <label className='flex items-center gap-3 cursor-pointer'>
-                <input type='checkbox' checked={pkgForm.popular} onChange={e => setPkgForm({...pkgForm, popular: e.target.checked})} className='w-4 h-4 accent-yellow-500' />
+                <input type='checkbox' checked={pkgForm.popular} onChange={e => setPkgForm({ ...pkgForm, popular: e.target.checked })} className='w-4 h-4 accent-yellow-500' />
                 <span className='text-sm font-medium text-gray-700'>Mark as Most Popular</span>
               </label>
               <div className='flex gap-3 pt-2'>
