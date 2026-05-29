@@ -18,10 +18,10 @@ function validate(form) {
   }
   if (!form.email.trim()) {
     errors.email = 'Email is required'
-  } else if (!/^[^s@]+@[^s@]+.[^s@]+$/.test(form.email)) {
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
     errors.email = 'Enter a valid email address'
   }
-  if (form.phone && !/^[+]?[0-9s-]{8,15}$/.test(form.phone)) {
+  if (form.phone && !/^[+]?[0-9\s-]{8,15}$/.test(form.phone)) {
     errors.phone = 'Enter a valid phone number'
   }
   if (!form.message.trim()) {

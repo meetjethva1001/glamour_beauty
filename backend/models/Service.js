@@ -6,6 +6,11 @@ const serviceSchema = new mongoose.Schema({
   category: { type: String, required: true, enum: ['Hair', 'Skin', 'Nails', 'Wellness'] },
   price: { type: Number, required: true },
   duration: { type: String, required: true },
+  variants: [{
+    title: { type: String, required: true },
+    price: { type: Number, required: true },
+    duration: { type: String, required: true }
+  }],
   icon: { type: String, default: '✨' },
   popular: { type: Boolean, default: false },
   isActive: { type: Boolean, default: true },

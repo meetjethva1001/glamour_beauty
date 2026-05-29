@@ -19,19 +19,19 @@ export default function ServiceCard({ service, index = 0 }) {
         viewport={{ once: true }}
         transition={{ duration: 0.55, delay: index * 0.07 }}
         whileHover={{ y: -6, transition: { duration: 0.25 } }}
-        className="relative bg-white rounded-3xl overflow-hidden group cursor-pointer h-full"
+        className="relative bg-white rounded-[32px] overflow-hidden group cursor-pointer h-full"
         style={{
-          boxShadow: '0 10px 30px -5px rgba(0,0,0,0.08)',
-          border: '1px solid rgba(0,0,0,0.08)',
-          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+          boxShadow: '0 12px 40px -8px rgba(0,0,0,0.12)',
+          border: '1px solid rgba(0,0,0,0.12)',
+          transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
         }}
         onMouseEnter={e => {
-          e.currentTarget.style.boxShadow = '0 25px 60px -12px rgba(0,0,0,0.15)'
-          e.currentTarget.style.borderColor = 'rgba(201,169,110,0.4)'
+          e.currentTarget.style.boxShadow = '0 30px 70px -15px rgba(0,0,0,0.2)'
+          e.currentTarget.style.borderColor = 'rgba(201,169,110,0.5)'
         }}
         onMouseLeave={e => {
-          e.currentTarget.style.boxShadow = '0 10px 30px -5px rgba(0,0,0,0.08)'
-          e.currentTarget.style.borderColor = 'rgba(0,0,0,0.08)'
+          e.currentTarget.style.boxShadow = '0 12px 40px -8px rgba(0,0,0,0.12)'
+          e.currentTarget.style.borderColor = 'rgba(0,0,0,0.12)'
         }}
       >
         {/* Top accent bar */}
@@ -70,14 +70,14 @@ export default function ServiceCard({ service, index = 0 }) {
         </h3>
 
         {/* Description */}
-        <p className="text-sm text-gray-500 font-light leading-relaxed mb-6">
+        <p className="text-sm text-gray-600 font-normal leading-relaxed mb-6">
           {service.description}
         </p>
 
         {/* Footer */}
         <div className="flex items-center justify-between pt-5 border-t border-gray-100">
           <span className="font-serif text-2xl font-bold text-gray-900">Rs.{service.price}</span>
-          <span className="text-xs text-gray-400 font-medium">⏱ {service.duration}</span>
+          <span className="text-xs text-gray-500 font-semibold uppercase tracking-wider">⏱ {service.duration}</span>
         </div>
       </div>
       </motion.div>

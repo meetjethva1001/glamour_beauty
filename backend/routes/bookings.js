@@ -33,14 +33,15 @@ router.get('/my', protect, async (req, res) => {
 // POST /api/bookings — logged in user
 router.post('/', protect, async (req, res) => {
   try {
-    const { service, package, date, amount, notes } = req.body
+    const { service, package, date, amount, notes, variant } = req.body
     const booking = await Booking.create({
       user: req.user._id,
       service,
       package,
       date,
       amount,
-      notes
+      notes,
+      variant
     })
     res.status(201).json({ success: true, booking })
   } catch (err) {
@@ -48,12 +49,27 @@ router.post('/', protect, async (req, res) => {
   }
 })
 
-// PATCH /api/bookings/:id — admin only (update status)
-router.patch('/:id', protect, adminOnly, async (req, res) => {
+// PATCH /api/bookings/:id — Owner or Admin
+router.patch('/:id', protect, async (req, res) => {
   try {
     const { status } = req.body
-    const booking = await Booking.findByIdAndUpdate(req.params.id, { status }, { new: true })
-    if (!booking) return res.status(404).json({ success: false, message: 'Booking not found.' })
+    const booking = await Booking.findById(req.params.id)
+
+    if (!booking) {
+      return res.status(404).json({ success: false, message: 'Booking not found.' })
+    }
+
+    // Check if user is admin OR the owner of the booking
+    if (req.user.role !== 'admin' && booking.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ success: false, message: 'Not authorized to update this booking.' })
+    }
+
+    booking.status = status
+    if (status === 'cancelled') {
+        booking.cancelledBy = req.user.role === 'admin' ? 'admin' : 'user'
+    }
+    await booking.save()
+
     res.json({ success: true, booking })
   } catch (err) {
     res.status(400).json({ success: false, message: err.message })

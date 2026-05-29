@@ -58,6 +58,12 @@ export const bookingsApi = {
   getMy: () => api.get('/bookings/my'),
   create: (data) => api.post('/bookings', data),
   updateStatus: (id, status) => api.patch(`/bookings/${id}`, { status }),
+  cancel: (id) => api.patch(`/bookings/${id}`, { status: 'cancelled' }),
+}
+
+export const usersApi = {
+  getAll: () => api.get('/users'),
+  delete: (id) => api.delete(`/users/${id}`),
 }
 
 export default api

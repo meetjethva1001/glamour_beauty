@@ -11,6 +11,7 @@ export default function ServiceDetail() {
   
   const [service, setService] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [selectedVariant, setSelectedVariant] = useState(null)
   const [bookingDate, setBookingDate] = useState('')
   const [bookingTime, setBookingTime] = useState('')
   const [notes, setNotes] = useState('')
@@ -49,7 +50,8 @@ export default function ServiceDetail() {
       await bookingsApi.create({
         service: id,
         date: combinedDate,
-        amount: service.price,
+        amount: selectedVariant ? selectedVariant.price : service.price,
+        variant: selectedVariant ? selectedVariant.title : null,
         notes
       })
       setSuccess(true)
@@ -83,13 +85,43 @@ export default function ServiceDetail() {
               <div className="flex items-center gap-10 py-6 border-t border-gray-50">
                 <div>
                   <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">Price</p>
-                  <p className="font-serif text-3xl font-bold text-gray-900">Rs.{service.price}</p>
+                  <p className="font-serif text-3xl font-bold text-gray-900">Rs.{selectedVariant ? selectedVariant.price : service.price}</p>
                 </div>
                 <div>
                   <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">Duration</p>
-                  <p className="font-sans text-xl font-medium text-gray-700">{service.duration}</p>
+                  <p className="font-sans text-xl font-medium text-gray-700">{selectedVariant ? selectedVariant.duration : service.duration}</p>
                 </div>
               </div>
+
+              {service.variants && service.variants.length > 0 && (
+                <div className="mt-8 pt-8 border-t border-gray-50">
+                  <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-4">Choose Variation</p>
+                  <div className="grid gap-3">
+                    <button 
+                      onClick={() => setSelectedVariant(null)}
+                      className={`p-4 rounded-2xl border text-left transition-all ${!selectedVariant ? 'border-yellow-500 bg-yellow-50/30' : 'border-gray-100'}`}
+                    >
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-medium text-gray-900">Standard / Base</span>
+                        <span className="text-sm font-bold text-gray-900">Rs.{service.price}</span>
+                      </div>
+                    </button>
+                    {service.variants.map((v, i) => (
+                      <button 
+                        key={i}
+                        onClick={() => setSelectedVariant(v)}
+                        className={`p-4 rounded-2xl border text-left transition-all ${selectedVariant?.title === v.title ? 'border-yellow-500 bg-yellow-50/30' : 'border-gray-100'}`}
+                      >
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm font-medium text-gray-900">{v.title}</span>
+                          <span className="text-sm font-bold text-gray-900">Rs.{v.price}</span>
+                        </div>
+                        <p className="text-[10px] text-gray-400 mt-1 uppercase tracking-widest">⏱ {v.duration}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </motion.div>
 

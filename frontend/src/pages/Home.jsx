@@ -72,7 +72,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-lg text-gray-500 font-light leading-relaxed mb-10 max-w-lg mx-auto lg:mx-0"
+                className="text-lg text-gray-600 font-medium leading-relaxed mb-10 max-w-lg mx-auto lg:mx-0"
               >
                 Experience the art of beauty at Glamour Studio. Where every visit is a luxurious journey crafted just for you.
               </motion.p>
@@ -119,13 +119,19 @@ export default function Home() {
               >
                 <div className="text-center px-10">
                   <motion.div
-                    animate={{ y: [0, -14, 0] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                    className="text-[100px] mb-6 leading-none"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 1.2, ease: 'easeOut' }}
+                    className="relative rounded-[40px] overflow-hidden shadow-2xl group"
                   >
-                    💆‍♀️
+                    <img 
+                      src="/hero_beauty_session_1780049333798.png" 
+                      alt="Luxury Beauty Session" 
+                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
                   </motion.div>
-                  <p className="font-serif text-xl text-gray-600 italic leading-relaxed">
+                  <p className="font-serif text-xl text-gray-600 italic leading-relaxed mt-10">
                     "Beauty is an art,<br />we are the artists."
                   </p>
                 </div>
@@ -261,6 +267,69 @@ export default function Home() {
                   <p className="text-sm text-gray-500 font-light leading-relaxed">{item.desc}</p>
                 </motion.div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── GALLERY / EXPERIENCE ─── */}
+      <section className="py-24 bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div className="max-w-xl">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-8 h-px bg-yellow-600/30" />
+                <span className="text-xs font-semibold tracking-widest uppercase text-yellow-600">Our Atmosphere</span>
+              </div>
+              <h2 className="font-serif text-4xl sm:text-5xl font-semibold text-gray-900 leading-tight">
+                Experience Luxury In<br />
+                <span className="italic gold-text">Every Detail</span>
+              </h2>
+            </div>
+            <p className="text-gray-500 font-light max-w-sm">From serene spa rooms to modern styling stations, we've created a sanctuary for your beauty journey.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="md:col-span-2 h-[500px] rounded-[40px] overflow-hidden relative group"
+            >
+              <img src="/hair_salon_modern_1780049470169.png" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Modern Styling Station" />
+              <div className="absolute inset-x-8 bottom-8 p-8 bg-white/10 backdrop-blur-md rounded-3xl border border-white/20">
+                <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/80">Styling</span>
+                <h4 className="text-xl font-serif text-white mt-1">Modern Styling Stations</h4>
+              </div>
+            </motion.div>
+            
+            <div className="space-y-6">
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="h-[238px] rounded-[32px] overflow-hidden relative group"
+              >
+                <img src="/spa_treatment_room_1780049390324.png" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Wellness Suite" />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                   <h4 className="text-lg font-serif text-white tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity">Wellness Suites</h4>
+                </div>
+              </motion.div>
+              
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="h-[238px] rounded-[32px] overflow-hidden relative group"
+              >
+                <img src="/nail_art_luxurious_1780049597844.png" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Nail Art Precision" />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                   <h4 className="text-lg font-serif text-white tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity">Nail Artistry</h4>
+                </div>
+              </motion.div>
             </div>
           </div>
         </div>

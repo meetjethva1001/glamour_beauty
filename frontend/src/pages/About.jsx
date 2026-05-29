@@ -51,11 +51,14 @@ export default function About() {
             </motion.div>
 
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-              <div className='rounded-3xl overflow-hidden' style={{ background: 'linear-gradient(135deg, #FFF8EE 0%, #FFF0F5 100%)' }}>
+              <div className='rounded-3xl overflow-hidden shadow-xl' style={{ background: 'white' }}>
+                <div className='relative h-64 overflow-hidden'>
+                   <img src="/spa_treatment_room_1780049390324.png" className="w-full h-full object-cover" alt="Spa Treatment Room" />
+                   <div className="absolute inset-0 bg-black/10" />
+                </div>
                 <div className='p-8 sm:p-12 text-center'>
-                  <div className='text-7xl sm:text-8xl mb-6'>🌸</div>
                   <p className='font-serif text-xl sm:text-2xl text-gray-600 italic leading-relaxed'>
-                    Beauty is not in the face; beauty is a light in the heart.
+                    "Beauty is not in the face; beauty is a light in the heart."
                   </p>
                   <p className='text-gray-400 font-light text-sm mt-4'>— Kahlil Gibran</p>
                 </div>
